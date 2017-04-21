@@ -13,7 +13,7 @@ RUN yo hubot --owner "miura" --name "customer" \
       --adapter slack
 
 COPY ./scripts scripts
-COPY ./test test
+COPY ./tests tests
 
 RUN npm install mocha chai hubot-test-helper --save-dev
 
