@@ -16,5 +16,5 @@ describe 'example script', ->
     @room.user.say('alice', 'HELLO').then =>
       expect(@room.messages).to.eql [
         ['alice', 'HELLO']
-        ['customer', 'Hi']
+        ['hubot', 'Hi']
       ]
