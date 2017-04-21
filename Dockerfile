@@ -2,8 +2,7 @@ FROM node:latest
 
 MAINTAINER Daisuke Miura <miura.daisuke@simpline.co.jp>
 
-RUN npm install -g coffee-script yo generator-hubot
-RUN npm install hubot-slack --save
+RUN npm install -g yo generator-hubot hubot-slack --save
 RUN useradd hubot
 RUN mkdir /home/hubot && chown hubot.hubot /home/hubot
 
@@ -14,9 +13,12 @@ RUN yo hubot --owner "miura" --name "customer" \
       --adapter slack
 
 COPY ./scripts scripts
+COPY ./test test
 
-ENV HUBOT_SLACK_TOKEN $MYHUBOT_SLACK_TOKEN
+RUN npm install mocha chai hubot-test-helper --save-dev
+
+ENV HUBOT_SLACK_TOKEN ${MYHUBOT_SLACK_TOKEN}
 
 EXPOSE 9999
 
-CMD cd /bot; bin/hubot --adapter slack
+CMD bin/hubot --adapter slack

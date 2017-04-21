@@ -5,6 +5,5 @@
 #   hubot hello - Say "Hi"
 
 module.exports = (robot) ->
-  robot.respond /HELLO$/i, (msg) ->
-    # robot.brain.set msg.message.user.name, "test"
+  robot.hear /HELLO$/i, (msg) ->
     msg.send "Hi"
