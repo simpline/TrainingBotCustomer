@@ -3,18 +3,18 @@ chai = require 'chai'
 
 expect = chai.expect
 
-helper = new Helper('../scripts/hello.coffee')
+helper = new Helper('../scripts/training1st.coffee')
 
-describe 'Training 1', ->
+describe 'The 1st day of Training', ->
   beforeEach ->
     @room = helper.createRoom()
 
   afterEach ->
     @room.destroy()
 
-  it 'start Training 1', ->
-    @room.user.say('miura', '@customer 三浦と申します。監視ソフトウェアの構築をしていました。').then =>
+  it 'should reply greeting to trainee', ->
+    @room.user.say('miura', '@hubot 三浦と申します。監視ソフトウェアの構築をしていました。').then =>
       expect(@room.messages).to.eql [
-        ['miura', '@customer 三浦と申します。監視ソフトウェアの構築をしていました。']
+        ['miura', '@hubot 三浦と申します。監視ソフトウェアの構築をしていました。']
         ['hubot', '@miura はじめまして、三浦さん。これからよろしくお願いします。']
       ]
