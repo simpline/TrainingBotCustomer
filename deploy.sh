@@ -4,18 +4,18 @@
 JQ="jq --raw-output --exit-status"
 
 configure_aws_cli(){
-	aws --version
-	aws configure set default.region ap-northeast-1
-	aws configure set default.output json
+    aws --version
+    aws configure set default.region ap-northeast-1
+    aws configure set default.output json
 }
 
 deploy_cluster() {
 
-    family="trainingbot"
+    family="bot-customer"
 
     make_task_def
     register_definition
-    if [[ $(aws ecs update-service --cluster trainingbot --service traningbot-service --task-definition $revision | \
+    if [[ $(aws ecs update-service --cluster bot-customer --service bot-customer-service --task-definition $revision | \
                    $JQ '.service.taskDefinition') != $revision ]]; then
         echo "Error updating service."
         return 1
@@ -24,7 +24,7 @@ deploy_cluster() {
     # wait for older revisions to disappear
     # not really necessary, but nice for demos
     for attempt in {1..30}; do
-        if stale=$(aws ecs describe-services --cluster traningbot --services traningbot-service | \
+        if stale=$(aws ecs describe-services --cluster bot-customer --services bot-customer-service | \
                        $JQ ".services[0].deployments | .[] | select(.taskDefinition != \"$revision\") | .taskDefinition"); then
             echo "Waiting for stale deployments:"
             echo "$stale"
@@ -39,28 +39,39 @@ deploy_cluster() {
 }
 
 make_task_def(){
-	task_template='[
-		{
-			"name": "traningbot",
-			"image": "%s.dkr.ecr.ap-northeast-1.amazonaws.com/simpline/traningbot:%s",
-			"essential": true,
-			"memory": 200,
-			"cpu": 10,
-			"portMappings": [
-				{
-					"containerPort": 9999,
-					"hostPort": 9999
-				}
-			]
-		}
-	]'
-	
-	task_def=$(printf "$task_template" $AWS_ACCOUNT_ID $CIRCLE_SHA1)
+    task_template='[
+        {
+            "name": "traningbot",
+            "image": "%s.dkr.ecr.ap-northeast-1.amazonaws.com/bot/customer:%s",
+            "essential": true,
+            "memory": 200,
+            "cpu": 10,
+            "portMappings": [
+                {
+                    "containerPort": 8080,
+                    "hostPort": 8080
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "trainingbot",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "boss"
+                }
+            },
+            "environment": [
+                { "name": "HUBOT_SLACK_TOKEN", "value": "%s" }
+            ]
+        }
+    ]'
+
+    task_def=$(printf "$task_template" $AWS_ACCOUNT_ID $CIRCLE_SHA1 $MYHUBOT_SLACK_TOKEN)
 }
 
 push_ecr_image(){
-	eval $(aws ecr get-login --region ap-northeast-1)
-	docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/simpline/traningbot:$CIRCLE_SHA1
+    eval $(aws ecr get-login --region ap-northeast-1)
+    docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/bot/customer:$CIRCLE_SHA1
 }
 
 register_definition() {
