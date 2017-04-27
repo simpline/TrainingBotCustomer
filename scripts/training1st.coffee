@@ -1,5 +1,5 @@
 # Description:
-#   Training 1 - 自己紹介
+#   The 1st week of Training - 自己紹介
 #
 # Commands:
 #   customer {名前}と申します。{これまでの経歴}
