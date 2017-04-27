@@ -29,7 +29,7 @@ describe 'The 2nd week of Training', ->
       ]
 
   it 'should instruct rebuilding Wordpress', ->
-    @room.user.say('miura', '@hubot MovableTypeに変更したことを報告しに来ました。').then ->
+    @room.user.say('miura', '@hubot MovableTypeに変更したことを報告しに来ました。').then =>
       expect(@room.messages).to.eql [
         ['miura', '@hubot MovableTypeに変更したことを報告しに来ました。']
         ['hubot', '@miura いやー、変えてもらったところを申し訳ないんだけどね。やはりWordpressのがよさそうで、Wordpressにしてほしいんだよ。MovableTypeがいいと言っていた社員もブログを書くだけでサーバを運用するわけじゃないから、口出さないように言っておいたよ。それでは、よろしく。']
@@ -37,7 +37,7 @@ describe 'The 2nd week of Training', ->
       ]
 
   it 'should instruct scheduling a backup for Wordpress', ->
-    @room.user.say('miura', '@hubot Wordpressに戻したことを報告しに来ました。').then ->
+    @room.user.say('miura', '@hubot Wordpressに戻したことを報告しに来ました。').then =>
       expect(@room.messages).to.eql [
         ['miura', '@hubot Wordpressに戻したことを報告しに来ました。']
         ['hubot', '@miura じゃあ、早速使ってみますよ。それと、せっかく書いたのに消えてしまってはいやだから、バックアップをとれるようにしておいてください。']
@@ -45,14 +45,14 @@ describe 'The 2nd week of Training', ->
       ]
 
   it 'should instruct restoring Wordpress', ->
-    @room.user.say('miura', '@hubot 障害とその原因について報告しに来ました。障害の原因はプロセスが停止したことによるものでした。').then ->
+    @room.user.say('miura', '@hubot 障害とその原因について報告しに来ました。障害の原因はプロセスが停止したことによるものでした。').then =>
       expect(@room.messages).to.eql [
         ['miura', '@hubot 障害とその原因について報告しに来ました。障害の原因はプロセスが停止したことによるものでした。']
         ['hubot', '@miura そういうことですか。バックアップを取ってあるので、すぐ戻せますよね。すぐに取りかかってください。戻ったら、私に「復旧したことを報告しに来ました。」と言いに来てください。']
       ]
 
   it 'should instruct setting monitoring', ->
-    @room.user.say('miura', '@hubot 復旧したことを報告しに来ました。プロセスを再起動したことで正常に動作しました。').then ->
+    @room.user.say('miura', '@hubot 復旧したことを報告しに来ました。プロセスを再起動したことで正常に動作しました。').then =>
       expect(@room.messages).to.eql [
         ['miura', '@hubot 復旧したことを報告しに来ました。プロセスを再起動したことで正常に動作しました。']
         ['hubot', '@miura ご苦労様です。復旧したことですし、とりあえずよしとしましょう。ただ、こちらが気づく前に、そちらで気づかないようでは困りますね。あらかじめそちらで気づくような仕組みを作っておいてください。']
