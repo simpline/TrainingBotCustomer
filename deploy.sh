@@ -44,8 +44,7 @@ make_task_def(){
             "name": "traningbot",
             "image": "%s.dkr.ecr.ap-northeast-1.amazonaws.com/bot/customer:%s",
             "essential": true,
-            "memory": 200,
-            "cpu": 10,
+            "memory": 128,
             "portMappings": [
                 {
                     "containerPort": 8080,
@@ -57,7 +56,7 @@ make_task_def(){
                 "options": {
                     "awslogs-group": "trainingbot",
                     "awslogs-region": "ap-northeast-1",
-                    "awslogs-stream-prefix": "boss"
+                    "awslogs-stream-prefix": "customer"
                 }
             },
             "environment": [

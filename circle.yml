@@ -4,11 +4,11 @@ machine:
 
 dependencies:
   post:
-    - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/simpline/trainingbot:$CIRCLE_SHA1 .
+    - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/bot/customer:$CIRCLE_SHA1 .
 
 test:
   post:
-    - docker run --rm -t $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/simpline/trainingbot:$CIRCLE_SHA1 node_modules/mocha/bin/mocha --compilers "coffee:coffee-script/register" tests/*.coffee
+    - docker run --rm -t $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/bot/customer:$CIRCLE_SHA1 node_modules/mocha/bin/mocha --compilers "coffee:coffee-script/register" tests/*.coffee
 
 deployment:
   prod:
