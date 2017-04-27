@@ -29,7 +29,7 @@ describe 'The 2nd week of Training', ->
       ]
 
   it 'should instruct rebuilding Wordpress', ->
-    @room.user.say('miura', '@hubot MovableTypeに変更したことを報告しに来ました。', ->
+    @room.user.say('miura', '@hubot MovableTypeに変更したことを報告しに来ました。').then ->
       expect(@room.messages).to.eql [
         ['miura', '@hubot MovableTypeに変更したことを報告しに来ました。']
         ['hubot', '@miura いやー、変えてもらったところを申し訳ないんだけどね。やはりWordpressのがよさそうで、Wordpressにしてほしいんだよ。MovableTypeがいいと言っていた社員もブログを書くだけでサーバを運用するわけじゃないから、口出さないように言っておいたよ。それでは、よろしく。']
