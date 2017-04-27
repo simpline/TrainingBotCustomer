@@ -45,9 +45,9 @@ describe 'The 2nd week of Training', ->
       ]
 
   it 'should instruct restoring Wordpress', ->
-    @room.user.say('miura', '@hubot 障害とその原因について報告しに来ました。障害の原因はプロセスが停止したことによるものでした。').then =>
+    @room.user.say('miura', '@hubot 障害内容とその原因について報告しに来ました。障害の原因はプロセスが停止したことによるものでした。').then =>
       expect(@room.messages).to.eql [
-        ['miura', '@hubot 障害とその原因について報告しに来ました。障害の原因はプロセスが停止したことによるものでした。']
+        ['miura', '@hubot 障害内容とその原因について報告しに来ました。障害の原因はプロセスが停止したことによるものでした。']
         ['hubot', '@miura そういうことですか。バックアップを取ってあるので、すぐ戻せますよね。すぐに取りかかってください。戻ったら、私に「復旧したことを報告しに来ました。」と言いに来てください。']
       ]
 
